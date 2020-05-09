@@ -23,7 +23,7 @@ TODO
   * Execute `make install` to install GLFW on your system (you may need to run this as sudo)
 2. Compiling the actual program
   * Navigate to the directory of the source code for this project
-  * Execute `g++ -g ./main.cpp -o ./main -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor`
+  * `g++ -g ./main.cpp -o ./main -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor`
 
 ### Windows
 TODO
