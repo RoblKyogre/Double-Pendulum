@@ -24,8 +24,10 @@ TODO
 2. Compiling the actual program
   * Navigate to the directory of the source code for this project
   * `g++ -g ./main.cpp -o ./main -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor`
+3. The file will be compiled as a shared library file named "main".
 
 ### Windows
 TODO
 
 ### Mac OS
+TODO
