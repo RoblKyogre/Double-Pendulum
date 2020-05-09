@@ -14,11 +14,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-}
-
 int draw(int width, int height)
 {
     GLFWwindow* window;
@@ -43,7 +38,6 @@ int draw(int width, int height)
 
     /* Set callbacks */
     glfwSetKeyCallback(window, key_callback);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     /* Set Swap Interval */
     glfwSwapInterval(1);
@@ -51,7 +45,14 @@ int draw(int width, int height)
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
+        double time = glfwGetTime();
+        double ratio;
+
         /* Render here */
+        glfwGetFramebufferSize(window, &width, &height);
+        ratio = width / height;
+
+        glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT);
 
         /* Swap front and back buffers */
