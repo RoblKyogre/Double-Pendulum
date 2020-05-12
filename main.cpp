@@ -1,5 +1,6 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
+#include <vector>
 
 using namespace std;
 
@@ -14,9 +15,26 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-int draw(int width, int height)
+void physics(double t, vector<int> &pendulumA, vector<int> &pendulumB)
 {
+    
+    cout<<"physics called; t = "<<t<<endl;
+    
+}
+
+int draw(vector<int> &pendulumA, vector<int> &pendulumB)
+{
+
     GLFWwindow* window;
+
+    int width = 1280;
+    int height = 720;
+
+    double ratio = 1280/720;
+    double program_time = -1.0; //This time value is how long the program has been running
+    double previous_time = -1.0;
+    double time_delta = -1.0;
+    double t = -1.0; //This time value is used in the physics calculations.
 
     /* Set Error Callback */
     glfwSetErrorCallback(error_callback);
@@ -45,8 +63,15 @@ int draw(int width, int height)
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-        double time = glfwGetTime();
-        double ratio;
+        
+        /* Run calculations */
+        previous_time = program_time;
+        program_time = glfwGetTime();
+        time_delta = program_time - previous_time;
+        t += time_delta;
+
+        physics(t, pendulumA, pendulumB);
+        
 
         /* Render here */
         glfwGetFramebufferSize(window, &width, &height);
@@ -65,15 +90,20 @@ int draw(int width, int height)
     glfwTerminate();
 
     return 0;
+
 }
 
 int main()
 {
 
     int draw_return = 0;
-    
-    draw_return = draw(1280, 720);
+
+    vector<int> pendulumA(2,0); // These will store X and Y coordinates as meters, not pixels
+    vector<int> pendulumB(2,0);
+
+    draw_return = draw(pendulumA, pendulumB);
 
     cout<<"Return Value: "<<draw_return<<endl;
     return draw_return;
+
 }
