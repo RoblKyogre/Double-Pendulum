@@ -11,7 +11,7 @@ Required Packages:
 * xorg-dev
 * libglu1-mesa-dev
 
-### [LiquidFun](https://github.com/google/liquidfun)
+### [Box2D](https://github.com/erincatto/box2d)
 TODO
 
 ## Compiling
