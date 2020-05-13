@@ -23,7 +23,7 @@ Required Packages:
 2. Compiling the actual program
   * Navigate to the directory of the source code for this project
   * Run build.sh to compile the program
-3. The file will be compiled as a shared library file named "main".
+3. The file will be compiled as a shared library file named "Double Pendulum".
 
 ### Windows
 TODO
