@@ -16,14 +16,8 @@ Required Packages:
 ## Compiling
 
 ### Linux
-1. Installing GLFW
-  * Navigate to the directory of the GLFW source code
-  * Execute `cmake .` to generate build files
-  * Execute `make install` to install GLFW on your system (you may need to run this as sudo)
-2. Compiling the actual program
-  * Navigate to the directory of the source code for this project
-  * Run build.sh to compile the program
-3. The file will be compiled as a shared library file named "main".
+* Run `build.sh` (requires sudo) if GLFW is not installed already
+* Run `compile.sh` if GLFW is already installed
 
 ### Windows
 TODO

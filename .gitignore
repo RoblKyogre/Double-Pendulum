@@ -1,6 +1,7 @@
 # Compiled Product #
 ####################
-DoublePendulum
+build/**
+build/
 
 # Compiled source #
 ###################
