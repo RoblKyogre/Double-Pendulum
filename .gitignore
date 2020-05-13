@@ -1,7 +1,7 @@
 # Compiled Product #
 ####################
-build/**
 build/
+.vscode/
 
 # Compiled source #
 ###################
