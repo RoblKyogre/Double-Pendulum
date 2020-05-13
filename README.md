@@ -18,6 +18,7 @@ Required Packages:
 ### Linux
 * Run `build.sh` (requires sudo) if GLFW is not installed already
 * Run `compile.sh` if GLFW is already installed
+* The file will be compiled as "DoublePendulum" in the "build" folder
 
 ### Windows
 TODO
