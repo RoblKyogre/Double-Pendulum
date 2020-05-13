@@ -12,7 +12,6 @@ Required Packages:
 * libglu1-mesa-dev
 
 ### [Box2D](https://github.com/erincatto/box2d)
-TODO
 
 ## Compiling
 
@@ -23,7 +22,7 @@ TODO
   * Execute `make install` to install GLFW on your system (you may need to run this as sudo)
 2. Compiling the actual program
   * Navigate to the directory of the source code for this project
-  * `g++ -g ./main.cpp -o ./main -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor`
+  * Run build.sh to compile the program
 3. The file will be compiled as a shared library file named "main".
 
 ### Windows

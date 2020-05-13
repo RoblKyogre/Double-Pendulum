@@ -16,14 +16,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-void physics(double t, vector<int> &pendulumA, vector<int> &pendulumB)
-{
-    
-    cout<<"physics called; t = "<<t<<endl;
-
-}
-
-int draw(vector<int> &pendulumA, vector<int> &pendulumB)
+int draw(vector<double> &pendulumA, vector<double> &pendulumB)
 {
 
     GLFWwindow* window;
@@ -34,32 +27,29 @@ int draw(vector<int> &pendulumA, vector<int> &pendulumB)
     double ratio = 1280/720;
     double program_time = -1.0; //This time value is how long the program has been running
     double previous_time = -1.0;
-    double time_delta = -1.0;
-    double t = -1.0; //This time value is used in the physics calculations.
+    double time_delta = -1.0; //This will be used in the physics "time step"
 
-    /* Set Error Callback */
+    bool is_sim_running = false;
+
+    /* Initialize GLFW */
     glfwSetErrorCallback(error_callback);
-
-    /* Initialize the library */
     if (!glfwInit())
         return -1;
-
-    /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(width, height, "Double Pendulum", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
         return -1;
     }
-
-    /* Make the window's context current */
     glfwMakeContextCurrent(window);
-
-    /* Set callbacks */
     glfwSetKeyCallback(window, key_callback);
-
-    /* Set Swap Interval */
     glfwSwapInterval(1);
+
+    /* Initialize Physics */
+    b2Vec2 gravity(0.0f, -9.8f);
+    b2World world(gravity);
+
+
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -69,11 +59,17 @@ int draw(vector<int> &pendulumA, vector<int> &pendulumB)
         previous_time = program_time;
         program_time = glfwGetTime();
         time_delta = program_time - previous_time;
-        t += time_delta;
 
-        physics(t, pendulumA, pendulumB);
+        /* Run physics */
+        if (is_sim_running)
+        {
+            cout<<"Physics is running";
+        }
+        else
+        {
+            cout<<"Physics is not running";
+        }
         
-
         /* Render here */
         glfwGetFramebufferSize(window, &width, &height);
         ratio = width / height;
@@ -99,8 +95,8 @@ int main()
 
     int draw_return = 0;
 
-    vector<int> pendulumA(2,0); // These will store X and Y coordinates as meters, not pixels
-    vector<int> pendulumB(2,0);
+    vector<double> pendulumA(2,0); // These will store X and Y coordinates as meters, not pixels
+    vector<double> pendulumB(2,0);
 
     draw_return = draw(pendulumA, pendulumB);
 

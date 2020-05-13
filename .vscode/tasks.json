@@ -3,7 +3,7 @@
     "tasks": [
 		{
 			"type": "shell",
-			"label": "C/C++: g++ build active file with GLFW",
+			"label": "C/C++: use this compile option with g++",
 			"command": "/usr/bin/g++",
 			"args": [
 				"-g",
@@ -20,7 +20,9 @@
 				"-lXi",
 				"-ldl",
 				"-lXinerama",
-				"-lXcursor"
+				"-lXcursor",
+				"-L${fileDirname}/libs",
+				"-lbox2d"
 			],
 			"options": {
 				"cwd": "/usr/bin"
