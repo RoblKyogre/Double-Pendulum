@@ -3,10 +3,11 @@
 #include "include/box2d/box2d.h"
 #include <vector>
 #include <math.h>
+#include <fstream>
 
 using namespace std;
 
-string key_action = "";
+string key_action = "reset";
 double scroll_scale = 0.0;
 vector<double> render_offset(2,0.0);
 
@@ -49,10 +50,10 @@ int draw(vector<float> &PenA_StartVec, vector<float> &PenB_StartVec)
     int width = 960;
     int height = 720;
 
-    double ratio = 1280/720;
     double program_time = -1.0; //This time value is how long the program has been running
     double previous_time = -1.0;
     double time_delta = -1.0; //This will be used in the physics "time step"
+    double t = 0.0; // This will link the x and y values to a time value
 
     int velocityIterations = 6;
     int positionIterations = 2;
@@ -60,6 +61,8 @@ int draw(vector<float> &PenA_StartVec, vector<float> &PenB_StartVec)
     vector<double> PenA_Render(2,-1);
     vector<double> PenB_Render(2,-1);
     vector<double> center_render(2,-1);
+
+    ofstream data_csv;
 
     /* User-Controlled Variables */
 
@@ -142,7 +145,7 @@ int draw(vector<float> &PenA_StartVec, vector<float> &PenB_StartVec)
         
         /* Run calculations */
         previous_time = program_time;
-        program_time = glfwGetTime();
+        program_time = glfwGetTime(); 
         time_delta = program_time - previous_time;
         
         /* Render here */
@@ -151,7 +154,6 @@ int draw(vector<float> &PenA_StartVec, vector<float> &PenB_StartVec)
         b2Vec2 PenB_Pos = PenB->GetPosition();
 
         glfwGetFramebufferSize(window, &width, &height);
-        ratio = width/height;
 
         center_render[0] = (center_pos.x+render_offset[0])
         * scale_factor / width;
@@ -194,7 +196,13 @@ int draw(vector<float> &PenA_StartVec, vector<float> &PenB_StartVec)
         /* Run physics */
         if (!is_sim_paused)
         {
+            if (t == 0)
+                data_csv<<"t,x1,y1,x2,y2\n";
+            data_csv<<t<<','<<PenA_Pos.x<<','<<PenA_Pos.y
+            <<','<<PenB_Pos.x<<','<<PenB_Pos.y<<'\n';
+
             world.Step(time_delta, velocityIterations, positionIterations);
+            t += time_delta;
         }
 
         /* Poll for and process events */
@@ -214,6 +222,10 @@ int draw(vector<float> &PenA_StartVec, vector<float> &PenB_StartVec)
             PenB->SetLinearVelocity(b2Vec2(0,0));
 
             is_sim_paused = true;
+            t = 0.0;
+
+            data_csv.close();
+            data_csv.open("data.csv", ios::out | ios::trunc);
         }
         key_action = "";
         scale_factor += scroll_scale;
@@ -226,6 +238,7 @@ int draw(vector<float> &PenA_StartVec, vector<float> &PenB_StartVec)
     }
 
     glfwTerminate();
+    data_csv.close();
 
     return 0;
 
@@ -238,7 +251,7 @@ int main(int argc, char *argv[])
     int draw_return = 0;
     vector<float> PenA_StartVec(2,0);
     vector<float> PenB_StartVec(2,0);
-
+    
     cout<<"<Enter>: Reset"<<endl<<"<Space>: Pause"<<endl;
     cout<<"<Scroll>: Zoom In/Out"<<endl;
     cout<<"<Left Arrow>: Move Left"<<endl<<"<Right Arrow>: Move Right"<<endl;
