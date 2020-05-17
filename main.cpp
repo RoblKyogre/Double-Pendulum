@@ -8,6 +8,7 @@ using namespace std;
 
 string key_action = "";
 double scroll_scale = 0.0;
+vector<double> render_offset(2,0.0);
 
 void error_callback(int error, const char* description)
 {
@@ -18,10 +19,19 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
         key_action = "pause";
-    if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
         key_action = "reset";
+    else if (key == GLFW_KEY_LEFT)
+        render_offset[0] -= 0.5;
+    else if (key == GLFW_KEY_RIGHT)
+        render_offset[0] += 0.5;
+    else if (key == GLFW_KEY_UP)
+        render_offset[1] += 0.5;
+    else if (key == GLFW_KEY_DOWN)
+        render_offset[1] -= 0.5;
+
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
@@ -100,7 +110,7 @@ int draw()
     b2Body* PenB = world.CreateBody(&PenB_Def);
 
     b2CircleShape PenShape;
-    PenShape.m_radius= 0.5f;
+    PenShape.m_radius= 0.25f;
 
     b2FixtureDef PenFixtureDef;
     PenFixtureDef.shape = &PenShape;
@@ -152,20 +162,27 @@ int draw()
         glfwGetFramebufferSize(window, &width, &height);
         ratio = width/height;
 
-        center_render[0] = center_pos.x * scale_factor / width;
-        center_render[1] = center_pos.y * scale_factor / height;
+        center_render[0] = (center_pos.x+render_offset[0])
+        * scale_factor / width;
+        center_render[1] = (center_pos.y+render_offset[1])
+         * scale_factor / height;
 
-        PenA_Render[0] = PenA_Pos.x * scale_factor / width;
-        PenA_Render[1] = PenA_Pos.y * scale_factor / height;
+        PenA_Render[0] = (PenA_Pos.x+render_offset[0])
+         * scale_factor / width;
+        PenA_Render[1] = (PenA_Pos.y+render_offset[1])
+         * scale_factor / height;
 
-        PenB_Render[0] = PenB_Pos.x * scale_factor / width;
-        PenB_Render[1] = PenB_Pos.y * scale_factor / height;
+        PenB_Render[0] = (PenB_Pos.x+render_offset[0])
+         * scale_factor / width;
+        PenB_Render[1] = (PenB_Pos.y+render_offset[1])
+         * scale_factor / height;
 
         glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT);
         glLoadIdentity();
-        glPointSize(scale_factor/5.0f);
 
+        glPointSize(0.25*scale_factor);
+        glLineWidth(0.08*scale_factor);
         glColor3d(1.0,0.0,0.0);
 
         glBegin(GL_POINTS);
@@ -173,8 +190,6 @@ int draw()
             glVertex2f(PenA_Render[0], PenA_Render[1]);
             glVertex2f(PenB_Render[0], PenB_Render[1]);
         glEnd();
-
-        glLineWidth(scale_factor/50.0f);
 
         glBegin(GL_LINE_STRIP);
             glVertex2f(center_render[0],center_render[1]);
