@@ -1,27 +1,32 @@
 #!/usr/bin/env bash
 
 # This script builds everything from scratch,
-# including the install of GLFW and other packages.
+# including the install of GLFW and other packages
+# if they are not installed.
 
-# Do not run this if you already have installed
-# GLFW or you have already run this script!
+# Create build directory
+if [ ! -d build ]
+then
+	mkdir build
+fi
+cd build
 
-# Warn user 
+printf "\n\nBeginning build process...\n\n"
 
-printf "This program will install GLFW and other packages on your system while compiling.\n!! If you wish to exit, press CTRL+C. !!\nDo not run this if you already ran this once or have already installed GLFW.\n\n"
+if [ ! -d files ]
+then
+	mkdir files
+fi
+cd files
+
+if [ ! -e /usr/local/lib/libglfw3.a ]
+then
+
+printf "GLFW has not been detected on your system.\nThis script will install GLFW and other packages on your system.\n!! If you wish to exit, press CTRL+C. !!\n\n"
 
 printf "Press any key to continue..."
 read -n 1 -s
-
-sudo printf "\n\nBeginning build process...\n\n"
-
-# Create build directory
-rm -rf build
-mkdir build
-cd build
-
-mkdir files
-cd files
+printf "\n"
 
 # Install essential packages
 
@@ -43,7 +48,19 @@ sudo make install
 
 cd ../..
 
+fi
 
 # Compile program
-cd ../..
-./compile.sh
+
+cd ..
+
+rm -f DoublePendulum
+
+g++ -g ../main.cpp -o ./DoublePendulum -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor -L../libs -lbox2d
+
+if [ -e DoublePendulum ]
+then
+	printf "\nProgram successfully compiled in the \"build\" folder!\n"
+else
+	printf "\nProgram failed to compile. See the output above.\n"
+fi
