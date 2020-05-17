@@ -1,7 +1,7 @@
 # Double-Pendulum
 This is a simulation of a double pendulum using the Box2D physics engine.
 
-To set your own starting position, add the coordinates when running the program from a terminal window.
+To set your own starting coordinates, add the coordinates when running the program from a terminal window.
 
 Syntax (Linux Example): `./DoublePendulum x1 y1 x2 y2`
 
