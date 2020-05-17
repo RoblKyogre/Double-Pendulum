@@ -39,7 +39,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     scroll_scale = yoffset*2.5;
 }
 
-int draw()
+int draw(vector<float> &PenA_StartVec, vector<float> &PenB_StartVec)
 {
 
     GLFWwindow* window;
@@ -64,15 +64,6 @@ int draw()
     /* User-Controlled Variables */
 
     bool is_sim_paused = true;
-
-    vector<float> PenA_StartVec(2,0);
-    vector<float> PenB_StartVec(2,0);
-
-    PenA_StartVec[0] = 5.0f;
-    PenA_StartVec[1] = 0.0f;
-
-    PenB_StartVec[0] = 10.0f;
-    PenB_StartVec[1] = 0.0f;
 
     double scale_factor = 50;
 
@@ -240,13 +231,48 @@ int draw()
 
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 
-    int draw_return = 0;
-    cout<<"<Enter>: Reset"<<endl<<"<Space>: Pause"<<endl;
 
-    draw_return = draw();
+    int draw_return = 0;
+    vector<float> PenA_StartVec(2,0);
+    vector<float> PenB_StartVec(2,0);
+
+    cout<<"<Enter>: Reset"<<endl<<"<Space>: Pause"<<endl;
+    cout<<"<Scroll>: Zoom In/Out"<<endl;
+    cout<<"<Left Arrow>: Move Left"<<endl<<"<Right Arrow>: Move Right"<<endl;
+    cout<<"<Up Arrow>: Move Up"<<endl<<"<Down Arrow>: Move Down"<<endl;
+    cout<<"<Escape>: Exit"<<endl<<endl;
+    
+    if (argc == 5)
+    {
+        PenA_StartVec[0] = stof(argv[1]);
+        PenA_StartVec[1] = stof(argv[2]);
+
+        PenB_StartVec[0] = stof(argv[3]);
+        PenB_StartVec[1] = stof(argv[4]);
+    }
+    else
+    {
+        PenA_StartVec[0] = 5.0f;
+        PenA_StartVec[1] = 0.0f;
+
+        PenB_StartVec[0] = 10.0f;
+        PenB_StartVec[1] = 0.0f;
+
+        cout<<"Tip: If you want to define your own starting point,"<<endl
+        <<"run this program from terminal with 4 arguments"<<endl
+        <<"with the coordinates you want to start from."<<endl<<endl;
+
+        cout<<"Example: ./DoublePendulum 1.2 3.4 5.6 7.8"<<endl<<endl;
+
+        cout<<"This will set the first pendulum's starting point"<<endl
+        <<"to (1.2, 3.4), and it will set the second pendulum's"<<endl
+        <<"starting point to (5.6, 7.8)."<<endl<<endl;
+    }
+    
+    draw_return = draw(PenA_StartVec, PenB_StartVec);
 
     return draw_return;
 
