@@ -164,7 +164,7 @@ int draw()
         glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT);
         glLoadIdentity();
-        glPointSize(10.0f);
+        glPointSize(scale_factor/5.0f);
 
         glColor3d(1.0,0.0,0.0);
 
@@ -173,6 +173,8 @@ int draw()
             glVertex2f(PenA_Render[0], PenA_Render[1]);
             glVertex2f(PenB_Render[0], PenB_Render[1]);
         glEnd();
+
+        glLineWidth(scale_factor/50.0f);
 
         glBegin(GL_LINE_STRIP);
             glVertex2f(center_render[0],center_render[1]);
