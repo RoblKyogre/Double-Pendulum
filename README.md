@@ -1,5 +1,9 @@
 # Double-Pendulum
-This is a simulation of a double pendulum using Google's LiquidFun physics engine.
+This is a simulation of a double pendulum using the Box2D physics engine.
+
+To set your own starting position, add the coordinates when running the program from a terminal window.
+
+Syntax (Linux Example): `./DoublePendulum x1 y1 x2 y2`
 
 ## Dependencies
 
@@ -16,8 +20,7 @@ Required Packages:
 ## Compiling
 
 ### Linux
-* Run `build.sh` (requires sudo) if GLFW is not installed already
-* Run `compile.sh` if GLFW is already installed
+* Run `build.sh` (may require `sudo` access if it doesn't see GLFW installed)
 * The file will be compiled as "DoublePendulum" in the "build" folder
 
 ### Windows
