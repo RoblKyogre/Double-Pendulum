@@ -7,6 +7,7 @@
 using namespace std;
 
 string key_action = "";
+double scroll_scale = 0.0;
 
 void error_callback(int error, const char* description)
 {
@@ -25,7 +26,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-
+    scroll_scale = yoffset*2.5;
 }
 
 int draw()
@@ -35,7 +36,7 @@ int draw()
 
     /* Program-Controlled Variables */
 
-    int width = 1280;
+    int width = 960;
     int height = 720;
 
     double ratio = 1280/720;
@@ -81,7 +82,7 @@ int draw()
     glfwSwapInterval(1);
 
     /* Initialize Physics */
-    b2Vec2 gravity(0.0f, -10.0f);
+    b2Vec2 gravity(0.0f, -9.8f);
     b2World world(gravity);
 
     b2BodyDef centerDef;
@@ -207,6 +208,10 @@ int draw()
             is_sim_paused = true;
         }
         key_action = "";
+        scale_factor += scroll_scale;
+        if (scale_factor < 0)
+            scale_factor = 0;
+        scroll_scale = 0.0;
 
 
 
