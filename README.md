@@ -11,6 +11,7 @@ This program also generates a .csv file, which can be made into a spreadsheet or
 
 ### [GLFW](https://www.glfw.org/)
 * This must be download and built
+
 Required Packages:
 * build-essential
 * libevent-pthreads-2.0.5
