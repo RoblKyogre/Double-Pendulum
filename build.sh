@@ -31,7 +31,7 @@ printf "\n"
 # Install essential packages
 
 sudo apt-get update 
-for package in build-essential libevent-pthreads-2.0.5 doxygen xorg-dev libglu1-mesa-dev; do sudo apt-get install -y $package; done
+for package in build-essential cmake make g++ libevent-pthreads-2.0.5 doxygen xorg-dev libglu1-mesa-dev; do sudo apt-get install -y $package; done
 
 
 # Install GLFW
