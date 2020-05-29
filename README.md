@@ -22,14 +22,7 @@ This program also generates a .csv file, which can be made into a spreadsheet or
 ## Dependencies
 
 ### [GLFW](https://www.glfw.org/)
-* This must be download and built
-
-Required Packages:
-* build-essential
-* libevent-pthreads-2.0.5
-* doxygen
-* xorg-dev
-* libglu1-mesa-dev
+* Automatically downloaded and built with `build.sh`
 
 ### [Box2D](https://github.com/erincatto/box2d)
 * Included with the project
