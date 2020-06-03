@@ -23,5 +23,16 @@ if [ -e DoublePendulum ]
 then
 	printf "\nProgram successfully compiled in the \"build\" folder!\n"
 else
+
 	printf "\nProgram failed to compile. See the output above.\n"
+	
+	printf "Packages may be missing\nThis script will install any necessary packages on your system.\n!! If you wish to exit, press CTRL+C. !!\n\n"
+	
+	printf "Press any key to continue..."
+	read -n 1 -s
+	printf "\n"
+	
+	sudo apt-get update 
+	for package in build-essential cmake make g++ libevent-pthreads-2.0.5 doxygen xorg-dev libglu1-mesa-dev; do sudo apt-get install -y $package; done
+	
 fi
