@@ -42,4 +42,5 @@ else
 		printf "\nProgram successfully compiled in the \"build\" folder!\n"
 	else
 		printf "\nProgram failed to compile. See the output above.\n"
+	fi
 fi
